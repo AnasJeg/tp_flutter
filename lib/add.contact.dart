@@ -1,32 +1,55 @@
 import 'package:flutter/material.dart';
 
 class AddContact extends StatelessWidget {
-  final text;
-  VoidCallback onAdd;
-  VoidCallback onCancel;
-  AddContact(
-      {super.key,
-      required this.text,
-      required this.onAdd,
-      required this.onCancel});
+  final TextEditingController text;
+  final VoidCallback onAdd;
+  final VoidCallback onCancel;
+
+  AddContact({
+    Key? key,
+    required this.text,
+    required this.onAdd,
+    required this.onCancel,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
       content: SizedBox(
-        height: 120,
-        child: Column(
-          children: [
-            TextFormField(
-              controller: text,
-            ),
-            Row(
-              children: [
-                MaterialButton(onPressed: onAdd, child: Text("add")),
-                MaterialButton(onPressed: onCancel, child: Text("cancel"))
-              ],
-            )
-          ],
+        height: MediaQuery.of(context).size.height * 0.2,
+        child: Card(
+          child: Column(
+            children: [
+              Expanded(
+                child: Column(
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade200,
+                      ),
+                      child: TextFormField(
+                        controller: text,
+                        decoration: const InputDecoration(
+                          hintText: 'new contact',
+                          border: InputBorder.none,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                  child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  MaterialButton(onPressed: onAdd, child: const Text("Add")),
+                  MaterialButton(
+                      onPressed: onCancel, child: const Text("Cancel"))
+                ],
+              ))
+            ],
+          ),
         ),
       ),
     );
