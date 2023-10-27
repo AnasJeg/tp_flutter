@@ -3,15 +3,14 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 
 class ContactBox extends StatelessWidget {
   String contactName;
-  bool selContact;
-  Function(bool?)? onChanged;
+  String? img;
+
   Function(BuildContext context)? deleteContact;
 
   ContactBox({
     Key? key,
     required this.contactName,
-    required this.selContact,
-    required this.onChanged,
+    this.img,
     required this.deleteContact,
   }) : super(key: key);
 
@@ -42,11 +41,7 @@ class ContactBox extends StatelessWidget {
           color: Colors.blue.shade100,
           child: ListTile(
             contentPadding: const EdgeInsets.all(8.0),
-            leading: Checkbox(
-              value: selContact,
-              onChanged: onChanged,
-              checkColor: Colors.white,
-            ),
+            leading: Image.asset(img!),
             title: Text(
               contactName,
               style: const TextStyle(

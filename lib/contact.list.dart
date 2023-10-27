@@ -1,5 +1,6 @@
 import 'package:first_project/add.contact.dart';
 import 'package:first_project/contact.box.dart';
+import 'package:first_project/model/contact.dart';
 import 'package:flutter/material.dart';
 
 class ContactList extends StatefulWidget {
@@ -10,12 +11,20 @@ class ContactList extends StatefulWidget {
 }
 
 class _ContactListState extends State<ContactList> {
-  final txt = TextEditingController();
+  final txtNom = TextEditingController();
+  final txtPrenom = TextEditingController();
+  final txtAge = TextEditingController();
+  final txtEmail = TextEditingController();
+
   List listContact = [
     ["aaaaa", false],
     ["bbbbb", false]
   ];
-
+  List<Contact> listContactV2 = [
+    Contact("zz", "pp", 23, "ddd", "assets/images/md.png"),
+    Contact("nn", "qq", 34, "lll", "assets/images/zn.png"),
+    Contact("kan", "kha", 54, "ttt", "assets/images/kan.jpeg")
+  ];
   Future<void> change(bool? value, int index) async {
     setState(() {
       listContact[index][1] = value;
@@ -24,8 +33,8 @@ class _ContactListState extends State<ContactList> {
 
   Future<void> save() async {
     setState(() {
-      listContact.add([txt.text, false]);
-      txt.clear();
+      // listContact.add([txt.text, false]);
+      // txt.clear();
       Navigator.of(context).pop();
     });
   }
@@ -41,7 +50,12 @@ class _ContactListState extends State<ContactList> {
         context: context,
         builder: (context) {
           return AddContact(
-              text: txt, onAdd: save, onCancel: () => Navigator.pop(context));
+              nom: txtNom,
+              prenom: txtPrenom,
+              age: txtAge,
+              email: txtEmail,
+              onAdd: save,
+              onCancel: () => Navigator.pop(context));
         });
   }
 
@@ -49,25 +63,22 @@ class _ContactListState extends State<ContactList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("contact"),
+        title: const Text("contact"),
         backgroundColor: Colors.blueAccent,
       ),
-      body: Container(
-        child: ListView.builder(
-          itemCount: listContact.length,
-          itemBuilder: (context, index) {
-            return ContactBox(
-              contactName: listContact[index][0],
-              selContact: listContact[index][1],
-              onChanged: (value) => {change(value, index)},
-              deleteContact: (context) => delete(index),
-            );
-          },
-        ),
+      body: ListView.builder(
+        itemCount: listContactV2.length,
+        itemBuilder: (context, index) {
+          return ContactBox(
+            contactName: listContactV2[index].nom,
+            img: listContactV2[index].photo ?? "assets/images/zn.png",
+            deleteContact: (context) => delete(index),
+          );
+        },
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
         onPressed: showContact,
+        child: const Icon(Icons.add),
       ),
     );
   }

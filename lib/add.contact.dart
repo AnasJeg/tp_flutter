@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 
 class AddContact extends StatelessWidget {
-  final TextEditingController text;
+  final TextEditingController nom;
+  final TextEditingController prenom;
+  final TextEditingController age;
+  final TextEditingController email;
   final VoidCallback onAdd;
   final VoidCallback onCancel;
 
   AddContact({
     Key? key,
-    required this.text,
+    required this.nom,
+    required this.prenom,
+    required this.age,
+    required this.email,
     required this.onAdd,
     required this.onCancel,
   }) : super(key: key);
@@ -29,7 +35,7 @@ class AddContact extends StatelessWidget {
                         color: Colors.grey.shade200,
                       ),
                       child: TextFormField(
-                        controller: text,
+                        controller: nom,
                         decoration: const InputDecoration(
                           hintText: 'new contact',
                           border: InputBorder.none,
