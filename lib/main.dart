@@ -1,4 +1,5 @@
 import 'package:first_project/contact.list.dart';
+import 'package:first_project/contact.view.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -10,14 +11,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-        //  title: 'Flutter Demo',
-        // theme: ThemeData(
-        //   colorScheme: ColorScheme.fromSeed(
-        //       seedColor: Color.fromARGB(255, 165, 165, 166)),
-        //   useMaterial3: true,
-        // ),
-        debugShowCheckedModeBanner: false,
-        home: ContactList());
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      routes: {
+        "/": (context) => const ContactList(),
+        "/view": (context) => ContactView()
+      },
+      initialRoute: "/",
+    );
   }
 }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class AddContact extends StatelessWidget {
   final TextEditingController nom;
@@ -20,44 +22,118 @@ class AddContact extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final formKey = GlobalKey<FormState>();
     return AlertDialog(
       content: SizedBox(
-        height: MediaQuery.of(context).size.height * 0.2,
-        child: Card(
-          child: Column(
-            children: [
-              Expanded(
-                child: Column(
-                  children: [
-                    Container(
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade200,
-                      ),
-                      child: TextFormField(
-                        controller: nom,
-                        decoration: const InputDecoration(
-                          hintText: 'new contact',
-                          border: InputBorder.none,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Expanded(
-                  child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          height: MediaQuery.of(context).size.height * 0.4,
+          child: SingleChildScrollView(
+            child: Form(
+              key: formKey,
+              child: Column(
                 children: [
-                  MaterialButton(onPressed: onAdd, child: const Text("Add")),
-                  MaterialButton(
-                      onPressed: onCancel, child: const Text("Cancel"))
+                  const SizedBox(height: 5),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.blueGrey, width: 2.0)),
+                      border: OutlineInputBorder(borderSide: BorderSide()),
+                      fillColor: Colors.white,
+                      filled: true,
+                      hintText: 'nom',
+                      labelText: 'Nom',
+                    ),
+                    controller: nom,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please fill this field';
+                      }
+                      return null;
+                    },
+                  ),
+                  const Divider(),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.blueGrey, width: 2.0)),
+                      border: OutlineInputBorder(borderSide: BorderSide()),
+                      fillColor: Colors.white,
+                      filled: true,
+                      hintText: 'prenom',
+                      labelText: 'Prenom',
+                    ),
+                    controller: prenom,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please fill this field';
+                      }
+                      return null;
+                    },
+                  ),
+                  const Divider(),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.blueGrey, width: 2.0)),
+                      border: OutlineInputBorder(borderSide: BorderSide()),
+                      fillColor: Colors.white,
+                      filled: true,
+                      hintText: 'age',
+                      labelText: 'Age',
+                    ),
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    keyboardType: TextInputType.number,
+                    controller: age,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please fill this field';
+                      }
+                      return null;
+                    },
+                  ),
+                  const Divider(),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.blueGrey, width: 2.0)),
+                      border: OutlineInputBorder(borderSide: BorderSide()),
+                      fillColor: Colors.white,
+                      filled: true,
+                      hintText: 'email',
+                      labelText: 'Email',
+                    ),
+                    controller: email,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please fill this field';
+                      }
+                      return null;
+                    },
+                  ),
+                  const Divider(),
+                  ElevatedButton(
+                      onPressed: () {
+                        if (formKey.currentState!.validate()) {
+                          onAdd();
+                        } else {
+                          Fluttertoast.showToast(
+                              msg: "not valid ",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.CENTER,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.red,
+                              textColor: Colors.black,
+                              fontSize: 16.0);
+                        }
+                      },
+                      child: const Text('Ajouter'))
                 ],
-              ))
-            ],
-          ),
-        ),
-      ),
+              ),
+            ),
+          )),
     );
   }
 }
